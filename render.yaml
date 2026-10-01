@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: stash
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      # Put your AI credentials in the dashboard, not in this file.
+      # Render's free disks are ephemeral, so keep the database off them.
+      - key: STASH_DB
+        value: /tmp/stash.db

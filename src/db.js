@@ -1,12 +1,35 @@
-import { DatabaseSync } from 'node:sqlite';
 import { mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// node:sqlite only exists on Node 22.5+. Hosts often default to Node 18/20,
+// where this is a bare "Cannot find module" with no hint about the fix.
+let DatabaseSync;
+try {
+  ({ DatabaseSync } = await import('node:sqlite'));
+} catch {
+  console.error(
+    '\nStash needs Node 22.5 or newer (it uses the built-in node:sqlite module).\n' +
+      `You are running Node ${process.version}.\n\n` +
+      'Fix it by setting the Node version for your app to 22 or 24:\n' +
+      '  package.json  -> "engines": { "node": ">=22.5.0" }   (already set here)\n' +
+      '  Render/Railway/Fly  -> set NODE_VERSION=22 or 24 in the dashboard\n' +
+      '  nvmrc         -> add a file containing "22"\n\n' +
+      'Locally: nvm install 22 && nvm use 22\n',
+  );
+  process.exit(1);
+}
+
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dbPath = process.env.STASH_DB ?? resolve(root, 'data', 'stash.db');
 
-mkdirSync(dirname(dbPath), { recursive: true });
+try {
+  mkdirSync(dirname(dbPath), { recursive: true });
+} catch (err) {
+  console.error(`[stash] cannot create the data directory at ${dirname(dbPath)}: ${err.message}`);
+  console.error('Set STASH_DB to a writable location, e.g. STASH_DB=/tmp/stash.db');
+  process.exit(1);
+}
 
 export const db = new DatabaseSync(dbPath);
 
