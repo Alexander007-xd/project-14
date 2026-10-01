@@ -1,0 +1,15 @@
+{
+  "name": "stash",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Stash - a personal inbox for useful links",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}

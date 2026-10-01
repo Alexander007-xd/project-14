@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Stash — save links, decide later</title>
+  <meta name="description" content="A personal inbox for useful links: summaries, tags, and one thing to try a day." />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📥</text></svg>" />
+</head>
+<body>
+  <header class="top">
+    <div class="top-inner">
+      <div class="brand">
+        <h1>Stash</h1>
+        <small>save now, decide later</small>
+      </div>
+      <nav class="tabs">
+        <a href="/" data-tab="inbox" class="active">Inbox</a>
+        <a href="/try-today" data-tab="try">Try today</a>
+        <a href="/digest" data-tab="digest">Digest</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap" id="view"></main>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
